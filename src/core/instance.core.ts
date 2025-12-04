@@ -605,4 +605,21 @@ export class ZoomPanPinch {
     }
     return { scale: 1, positionX: 0, positionY: 0 };
   };
+
+  getWrapperCenterInContent = (): StateType => {
+    if (this.wrapperComponent && this.contentComponent) {
+      const contentX = this.transformState.positionX;
+      const contentY = this.transformState.positionY;
+      const wrapperCenterX =
+        this.wrapperComponent.offsetWidth / 2 / this.transformState.scale;
+      const wrapperCenterY =
+        this.wrapperComponent.offsetHeight / 2 / this.transformState.scale;
+      return {
+        scale: this.transformState.scale,
+        positionX: -contentX + wrapperCenterX,
+        positionY: -contentY + wrapperCenterY,
+      };
+    }
+    return { scale: 1, positionX: 0, positionY: 0 };
+  };
 }
