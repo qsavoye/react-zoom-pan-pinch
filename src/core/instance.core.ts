@@ -130,40 +130,56 @@ export class ZoomPanPinch {
 
   initializeWindowEvents = (): void => {
     const passive = makePassiveEventOption();
-    const currentDocument = this.wrapperComponent?.ownerDocument;
-    const currentWindow = currentDocument?.defaultView;
+    const currentDocument = this.wrapperComponent?.parentElement;
+    // const currentWindow = currentDocument?.defaultView;
     this.wrapperComponent?.addEventListener(
       "wheel",
       this.onWheelPanning,
       passive,
     );
     // Panning on window to allow panning when mouse is out of component wrapper
-    currentWindow?.addEventListener("mousedown", this.onPanningStart, passive);
-    currentWindow?.addEventListener("mousemove", this.onPanning, passive);
-    currentWindow?.addEventListener("mouseup", this.onPanningStop, passive);
-    currentDocument?.addEventListener("mouseleave", this.clearPanning, passive);
-    currentWindow?.addEventListener("keyup", this.setKeyUnPressed, passive);
-    currentWindow?.addEventListener("keydown", this.setKeyPressed, passive);
-  };
-
-  cleanupWindowEvents = (): void => {
-    const passive = makePassiveEventOption();
-    const currentDocument = this.wrapperComponent?.ownerDocument;
-    const currentWindow = currentDocument?.defaultView;
-    currentWindow?.removeEventListener(
+    currentDocument?.addEventListener(
       "mousedown",
       this.onPanningStart,
       passive,
     );
-    currentWindow?.removeEventListener("mousemove", this.onPanning, passive);
-    currentWindow?.removeEventListener("mouseup", this.onPanningStop, passive);
+    currentDocument?.addEventListener("mousemove", this.onPanning, passive);
+    currentDocument?.addEventListener("mouseup", this.onPanningStop, passive);
+    currentDocument?.addEventListener("mouseleave", this.clearPanning, passive);
+    currentDocument?.addEventListener("keyup", this.setKeyUnPressed, passive);
+    currentDocument?.addEventListener("keydown", this.setKeyPressed, passive);
+  };
+
+  cleanupWindowEvents = (): void => {
+    const passive = makePassiveEventOption();
+    const currentDocument = this.wrapperComponent?.parentElement;
+    // const currentWindow = currentDocument?.defaultView;
+    currentDocument?.removeEventListener(
+      "mousedown",
+      this.onPanningStart,
+      passive,
+    );
+    currentDocument?.removeEventListener("mousemove", this.onPanning, passive);
+    currentDocument?.removeEventListener(
+      "mouseup",
+      this.onPanningStop,
+      passive,
+    );
     currentDocument?.removeEventListener(
       "mouseleave",
       this.clearPanning,
       passive,
     );
-    currentWindow?.removeEventListener("keyup", this.setKeyUnPressed, passive);
-    currentWindow?.removeEventListener("keydown", this.setKeyPressed, passive);
+    currentDocument?.removeEventListener(
+      "keyup",
+      this.setKeyUnPressed,
+      passive,
+    );
+    currentDocument?.removeEventListener(
+      "keydown",
+      this.setKeyPressed,
+      passive,
+    );
     document.removeEventListener("mouseleave", this.clearPanning, passive);
 
     handleCancelAnimation(this);
@@ -306,7 +322,7 @@ export class ZoomPanPinch {
     if (event.button === 2 && !this.setup.panning.allowRightClickPan) return;
 
     event.preventDefault();
-    event.stopPropagation();
+    // event.stopPropagation();
 
     handleCancelAnimation(this);
     handlePanningStart(this, event);
