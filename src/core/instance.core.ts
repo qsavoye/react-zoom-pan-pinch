@@ -608,8 +608,10 @@ export class ZoomPanPinch {
 
   getWrapperCenterInContent = (): StateType => {
     if (this.wrapperComponent && this.contentComponent) {
-      const contentX = this.transformState.positionX;
-      const contentY = this.transformState.positionY;
+      const contentX =
+        this.transformState.positionX / this.transformState.scale;
+      const contentY =
+        this.transformState.positionY / this.transformState.scale;
       const wrapperCenterX =
         this.wrapperComponent.offsetWidth / 2 / this.transformState.scale;
       const wrapperCenterY =
