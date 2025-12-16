@@ -321,7 +321,7 @@ export class ZoomPanPinch {
     if (event.button === 1 && !this.setup.panning.allowMiddleClickPan) return;
     if (event.button === 2 && !this.setup.panning.allowRightClickPan) return;
 
-    event.preventDefault();
+    // event.preventDefault();
     // event.stopPropagation();
 
     handleCancelAnimation(this);
@@ -341,8 +341,8 @@ export class ZoomPanPinch {
     const keysPressed = this.isPressingKeys(this.setup.panning.activationKeys);
     if (!keysPressed) return;
 
-    event.preventDefault();
-    event.stopPropagation();
+    // event.preventDefault();
+    // event.stopPropagation();
 
     handlePanning(this, event.clientX, event.clientY);
     handleCallback(getContext(this), event, onPanning);
@@ -385,8 +385,8 @@ export class ZoomPanPinch {
     const isAllowed = isPinchAllowed(this);
     if (!isAllowed) return;
 
-    event.preventDefault();
-    event.stopPropagation();
+    // event.preventDefault();
+    // event.stopPropagation();
 
     handlePinchZoom(this, event);
     handleCallback(getContext(this), event, onPinching);
@@ -453,8 +453,8 @@ export class ZoomPanPinch {
       const isAllowed = isPanningAllowed(this);
       if (!isAllowed) return;
 
-      event.preventDefault();
-      event.stopPropagation();
+      // event.preventDefault();
+      // event.stopPropagation();
 
       const touch = event.touches[0];
       handlePanning(this, touch.clientX, touch.clientY);

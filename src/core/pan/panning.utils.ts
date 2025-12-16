@@ -12,6 +12,8 @@ export const isPanningStartAllowed = (
   contextInstance: ReactZoomPanPinchContext,
   event: MouseEvent | TouchEvent,
 ): boolean => {
+  if (event.altKey) return false;
+
   const { excluded } = contextInstance.setup.panning;
   const { isInitialized, wrapperComponent } = contextInstance;
 
